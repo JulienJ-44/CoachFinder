@@ -1,0 +1,19 @@
+{
+  "name": "coachfinder",
+  "version": "1.0.0",
+  "description": "Application mettant en relation des coachs avec des personnes souhaitant développer leur compétences",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulienJ-44/CoachFinder.git"
+  },
+  "author": "Julien Juhel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JulienJ-44/CoachFinder/issues"
+  },
+  "homepage": "https://github.com/JulienJ-44/CoachFinder#readme"
+}
