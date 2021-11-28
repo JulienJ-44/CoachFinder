@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=coachfinder
+
+initialisation 2021-11-28T11:17:52Z Julien Juhel <juhel.julien@gmail.com> # création des tables
+seeding 2021-11-28T11:22:25Z Julien Juhel <juhel.julien@gmail.com> # ajout données dans tables
