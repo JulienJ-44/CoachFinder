@@ -2,15 +2,15 @@
 
 BEGIN;
 
-INSERT INTO "coach" ("first_name", "last_name", "description", "rate", "zip_code", "password") VALUES
-('John', 'Doe', 'Super coach', 8.5, '05', 'monMdP'),
-('Jane', 'Doe', 'Coach au top', 9.5, '44', 'myPW'),
-('Bill', 'Gate', 'Je peux vous expliquer 2 ou 3 choses', 10, '09', 'superPW');
+INSERT INTO "coach" ("first_name", "last_name", "description", "rate", "zip_code", "email", "password") VALUES
+('John', 'Doe', 'Super coach', 8.5, '05', 'john@doe.com', 'monMdP'),
+('Jane', 'Doe', 'Coach au top', 9.5, '44', 'jane@doe.com', 'myPW'),
+('Bill', 'Gate', 'Je peux vous expliquer 2 ou 3 choses', 10, '09', 'bill@gate.com', 'superPW');
 
-INSERT INTO "student" ("first_name", "last_name", "zip_code", "password") VALUES
-('Riri', 'Ducktale',  '05', 'monMdP'),
-('Fifi', 'Ducktale',   '44', 'myPW'),
-('Loulou', 'Ducktale',  '09', 'superPW');
+INSERT INTO "student" ("first_name", "last_name", "zip_code", "email", "password") VALUES
+('Riri', 'Ducktale',  '05','riri@duck.com',  'monMdP'),
+('Fifi', 'Ducktale',   '44','fifi@duck.com',   'myPW'),
+('Loulou', 'Ducktale',  '09','loulou@duck.com',   'superPW');
 
 INSERT INTO "skill" ("designation") VALUES
 ('Front End'),

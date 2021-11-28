@@ -13,6 +13,14 @@ module.exports = {
         return result.rows;
     },
 
+    async signin(data) {
+
+        const result = await client.query(`SELECT * FROM coach WHERE email= $1`,
+        [data.email])
+
+        return result.rows[0]
+    },
+
     
 }
 

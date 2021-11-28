@@ -10,6 +10,7 @@ CREATE TABLE "coach" (
   "description" TEXT,
   "zip_code" TEXT NOT NULL,
   "rate" FLOAT NOT NULL,
+  "email" TEXT NOT NULL,
   "password" TEXT NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "updated_at" TIMESTAMPTZ 
@@ -21,6 +22,7 @@ CREATE TABLE "student" (
   "first_name" TEXT NOT NULL,
   "last_name" TEXT NOT NULL,
   "zip_code" TEXT NOT NULL,
+  "email" TEXT NOT NULL,
   "password" TEXT NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "updated_at" TIMESTAMPTZ 
