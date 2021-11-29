@@ -10,7 +10,7 @@ CREATE TABLE "coach" (
   "description" TEXT,
   "zip_code" TEXT NOT NULL,
   "rate" FLOAT NOT NULL,
-  "email" TEXT NOT NULL,
+  "email" TEXT NOT NULL UNIQUE,
   "password" TEXT NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "updated_at" TIMESTAMPTZ 
@@ -22,7 +22,7 @@ CREATE TABLE "student" (
   "first_name" TEXT NOT NULL,
   "last_name" TEXT NOT NULL,
   "zip_code" TEXT NOT NULL,
-  "email" TEXT NOT NULL,
+  "email" TEXT NOT NULL UNIQUE,
   "password" TEXT NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "updated_at" TIMESTAMPTZ 
@@ -52,7 +52,8 @@ CREATE TABLE "coach_has_skill" (
     "coach_id" INTEGER NOT NULL REFERENCES "coach"("id") ON DELETE CASCADE,
     "skill_id" INTEGER NOT NULL REFERENCES "skill"("id") ON DELETE CASCADE,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
-    "updated_at" TIMESTAMPTZ
+    "updated_at" TIMESTAMPTZ,
+    UNIQUE("coach_id", "skill_id")
 );
 
 --6ème table

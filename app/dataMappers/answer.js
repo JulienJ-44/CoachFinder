@@ -11,5 +11,16 @@ module.exports = {
         return result.rows
     },
 
+    async add(data){
+        const result = await client.query(`INSERT INTO answer 
+        (message, sender, request_id) 
+        VALUES ($1, $2, $3) RETURNING *`,
+        [data.message, data.sender, data.request_id]);
+
+        console.log(result.rows[0])
+       
+        return result.rows[0]
+    },
+
     
 }

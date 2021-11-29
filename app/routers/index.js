@@ -13,6 +13,26 @@ const answerController = require('../controllers/answer');
 router.route('/coaches')
     // route pour obtenir toutes les annonces enregistrées
     .get(coachController.list)
+    .post(coachController.add)
+
+router.route('/coaches/:id(\\d+)')
+    // rechercher un user par son id
+    // .get(userController.getById)
+    // mettre à jour un user par son id
+    .patch(coachController.update)
+
+router.route('/coaches/:coach_id(\\d+)/skills')
+    .post(skillController.add)
+
+router.route('/students/:id(\\d+)')
+    // rechercher un user par son id
+    // .get(userController.getById)
+    // mettre à jour un user par son id
+    .patch(studentController.update)
+
+router.route('/students')
+    // route pour obtenir toutes les annonces enregistrées
+    .post(studentController.add)
 
 router.route('/coaches/signin')
     .post(coachController.signin)
@@ -30,8 +50,10 @@ router.route('/coaches/:id(\\d+)/requests')
 
 router.route('/requests/:id(\\d+)/answers')
     // route pour obtenir toutes les annonces enregistrées
-    .get(answerController.listByCoach)
+    .get(answerController.listByRequest)
+    .post(answerController.add)
 
-    
+router.route('/students/:student_id(\\d+)/coaches/:coach_id(\\d+)/requests')
+    .post(requestController.add)
 
 module.exports = router;

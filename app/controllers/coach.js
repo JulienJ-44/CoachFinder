@@ -70,4 +70,64 @@ module.exports = {
         }
     },
 
+    async add(request, response) {
+
+        try {
+             
+            const coach  = await coachDataMapper.add(request.body);
+
+            response.status(200).json({
+                coach, 
+                message: "Inscription réussie"
+            });
+            
+
+            
+        }catch(error){
+
+            console.trace(error);
+
+            //Nous avons utilisé la contrainte unique en BDD. 
+            //On peut donc faire en sorte de récupérer les code erreur 23505 qui est et sera toujours 
+            //le code d'erreur de "duplicate entry". 
+            if(error.code === '23505'){
+                return response.status(400).json({
+                    data: [], 
+                    error: `Cet email existe déjà dans la base de données, veuillez utiliser un email différent`
+                });
+            }
+
+            response.status(500).json({data: [], error: `Désolé une erreur serveur est survenue, veuillez réessayer ultérieurement.`});
+        }
+    },
+
+    async update(request, response, next) {
+        try {
+            
+            const coach = await coachDataMapper.update(request);
+            
+            if (!coach){
+                next();
+                return 
+            }
+            
+            response.json({coach});
+
+        } catch (error) {
+            console.trace(error);
+
+            if(error.code === '23505'){
+                return response.status(400).json({
+                    data: [], 
+                    error: `Cet email existe déjà dans la base de données, veuillez utiliser un email différent`
+                });
+            }
+            
+            response.json({
+                data: [], 
+                error: 'Désolé une erreur serveur est survenue, veuillez réessayer ultérieurement'
+            });
+        }
+    }
+
 };
