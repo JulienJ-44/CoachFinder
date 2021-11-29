@@ -8,25 +8,30 @@ const cors = require('cors');
 
 const app = express();
 
-const errorController = require('./app/controllers/404');
-
 //!Paramètres cors policy OK pour dev, à mettre à jour lors du déploiement final
 app.use(cors('*'));
 
 const port = process.env.PORT || 4000;
 
-const router = require('./app/routers');
-
+app.use('/uploads', express.static('uploads'));
 app.use(express.json());
 
 app.use(express.urlencoded({extended: true}));
 
+const router = require('./app/routers');
+const errorController = require('./app/controllers/404');
+
+// middleware permettant de contrer les attaques cross site scripting (XSS) ou injection HTML. 
 app.use(helmet());
 
-app.use(router);
+app.get('/', function (req, res) {
+    res.send('Hello World!');
+  });
+
+app.use('/api/v1', router);
 
 app.use(errorController.notFoundResource);
 
-app.listen(port, _ => {
-   console.log(`http://localhost:${port}`);
+app.listen(port, _=> {
+    console.log(`http://localhost:${port}`);
 });

@@ -1,5 +1,6 @@
 const coachDataMapper = require('../dataMappers/coach');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
 
@@ -51,13 +52,23 @@ module.exports = {
                 });
             };
 
-            
+            //Création du token 
+            const token = jwt.sign({
+                email: user.email,
+                userId: user.id
+            },
+            //clé secrète utilisée par JWT
+            process.env.JWT_KEY, {
+                //durée d'activité du token
+                expiresIn: process.env.JWT_EXPIRES_IN
+            });
 
             //Si email et password OK envoi des informations du user, un message de Connexion autorisée
             // et un token
             response.json({
-                user, 
-                message: "Connexion autorisée"
+                user,
+                message: "Connexion autorisée",
+                token
             });
             
         } catch (error) {
