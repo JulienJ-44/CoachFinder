@@ -1,39 +1,53 @@
 const studentDataMapper = require('../dataMappers/student');
+const bcrypt = require('bcrypt')
+const jwt  = require('jsonwebtoken')
 
 module.exports = {
     async signin(request, response) {
 
-        console.log('console.log(request.body)',request.body)
-
         try {
-            const user = await studentDataMapper.signin(request.body)
 
-            console.log( 'user', user)
+            const user = await studentDataMapper.signin(request.body)
             
             //vérification que l'email existe en bdd
             if(!user){
                 //si l'email n'existe pas envoi d'un message d'échec de la connection
-
-                console.log('erreur user inexistant')
                 return response.status(404).json({
                     message: 'Identifiants incorrects'
                 });
             };
+
+            //comparaison du MdP envoyé par le user avec celui enregistré en BDD
+            passwordTest = await bcrypt.compare(request.body.password, user.password);
 
             //si le password n'est pas correct envoi d'un message d'échec de la connection
-            if(request.body.password != user.password){
+            if(!passwordTest){
                 return response.status(404).json({
                     message: 'Identifiants incorrects'
                 });
             };
 
-            
+            //Création du token 
+            const token = jwt.sign(
+            {
+                email: user.email, 
+                userId: user.id
+            }, 
+            //clé secrète utilisée par JWT
+            process.env.JWT_KEY,
+            {
+                //durée d'activité du token
+                expiresIn: process.env.JWT_EXPIRES_IN
+            });
+
+                 
 
             //Si email et password OK envoi des informations du user, un message de Connexion autorisée
             // et un token
             response.json({
                 user, 
-                message: "Connexion autorisée"
+                message: "Connexion autorisée",
+                token
             });
             
         } catch (error) {
@@ -47,6 +61,9 @@ module.exports = {
     async add(request, response) {
 
         try {
+
+            // opération de hashage du password dans le request.body
+            request.body.password = await bcrypt.hash(request.body.password, 10)
              
             const student  = await studentDataMapper.add(request.body);
 

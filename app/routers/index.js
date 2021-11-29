@@ -7,18 +7,16 @@ const skillController = require('../controllers/skill');
 const requestController = require('../controllers/request');
 const studentController = require('../controllers/student');
 const answerController = require('../controllers/answer');
-
+const checkAuth = require('../middlewares/check-auth')
 
 
 router.route('/coaches')
-    // route pour obtenir toutes les annonces enregistrées
+    // ----
     .get(coachController.list)
     .post(coachController.add)
 
 router.route('/coaches/:id(\\d+)')
-    // rechercher un user par son id
-    // .get(userController.getById)
-    // mettre à jour un user par son id
+    // -----
     .patch(coachController.update)
 
 router.route('/coaches/:coach_id(\\d+)/skills')
@@ -54,6 +52,6 @@ router.route('/requests/:id(\\d+)/answers')
     .post(answerController.add)
 
 router.route('/students/:student_id(\\d+)/coaches/:coach_id(\\d+)/requests')
-    .post(requestController.add)
+    .post(checkAuth, requestController.add)
 
 module.exports = router;

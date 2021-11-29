@@ -1,4 +1,5 @@
 const coachDataMapper = require('../dataMappers/coach');
+const bcrypt = require('bcrypt')
 
 module.exports = {
 
@@ -29,25 +30,22 @@ module.exports = {
 
     async signin(request, response) {
 
-        console.log('console.log(request.body)',request.body)
-
         try {
             const user = await coachDataMapper.signin(request.body)
-
-            console.log( 'user', user)
             
             //vérification que l'email existe en bdd
             if(!user){
                 //si l'email n'existe pas envoi d'un message d'échec de la connection
-
-                console.log('erreur user inexistant')
                 return response.status(404).json({
                     message: 'Identifiants incorrects'
                 });
             };
 
+            //comparaison du MdP envoyé par le user avec celui enregistré en BDD
+            passwordTest = await bcrypt.compare(request.body.password, user.password);
+
             //si le password n'est pas correct envoi d'un message d'échec de la connection
-            if(request.body.password != user.password){
+            if(!passwordTest){
                 return response.status(404).json({
                     message: 'Identifiants incorrects'
                 });
@@ -73,7 +71,9 @@ module.exports = {
     async add(request, response) {
 
         try {
-             
+            
+            // opération de hashage du password dans le request.body
+            request.body.password = await bcrypt.hash(request.body.password, 10)
             const coach  = await coachDataMapper.add(request.body);
 
             response.status(200).json({

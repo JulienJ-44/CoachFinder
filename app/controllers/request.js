@@ -19,8 +19,6 @@ module.exports = {
 
     async add(request, response) {
 
-        console.log("request body: ", request.body)
-        console.log("request params: ", request.params)
 
         try {
             // Récupération des données
