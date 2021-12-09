@@ -28,8 +28,6 @@ module.exports = {
         VALUES ($1, $2, $3, $4, $5, $6, $7 ) RETURNING *`,
         [data.email, data.last_name, data.first_name, data.description, data.rate, data.zip_code,  data.password]);
 
-        console.log(result.rows[0])
-       
         return result.rows[0]
     },
 
@@ -54,23 +52,15 @@ module.exports = {
         
         const fields = sqlSet.join(', ');
 
-        console.log('fields: ', fields)
-
-
         let textSql = `UPDATE coach SET ${fields}, updated_at = now() WHERE id=$1 RETURNING *`;
-
-        console.log('textSql: ', textSql)
 
         let sql = {
             text: textSql,
             values: sqlValues
         };
 
-        console.log('sql: ', sql)
-
         const result = await client.query(sql);
         return result.rows;
-}
-    
+    }
 }
 

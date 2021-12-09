@@ -1,0 +1,6 @@
+coach (id INT, first_name TEXT, last_name TEXT, description TEXT, email TEXT, zip_code TEXT, rate FLOAT, password TEXT, created_at DATE, updated_at DATE )
+student (id INT, first_name TEXT, last_name TEXT, zip_code TEXT, email TEXT, password TEXT, created_at DATE, updated_at DATE )
+request (id INT, message TEXT, created_at DATE, updated_at DATE, #coach(id), student(id))
+skill (id INT, designation TEXT, created_at DATE, updated_at DATE)
+coach_has_skill (id INT, #coach(id), #skill(id), created_at DATE, updated_at DATE, UNIQUE(#coach(id), #skill(id)))
+answer (id INT, message TEXT, sender TEXT, #request(id), created_at DATE, updated_at DATE)

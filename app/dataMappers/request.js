@@ -15,10 +15,6 @@ module.exports = {
         VALUES ($1, $2, $3) RETURNING *`,
         [data.message, coach_id, student_id,]);
 
-        console.log(result.rows[0])
-       
         return result.rows[0]
     },
-
-    
 }
